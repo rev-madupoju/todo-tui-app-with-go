@@ -3,7 +3,15 @@ package main
 import (
 	"errors"
 	"fmt"
+	"github.com/aquasecurity/table"
+	"os"
+	"strconv"
 	"time"
+)
+
+const (
+	CompletedPending = "❌"
+	CompletedSuccess = "✅"
 )
 
 type Todo struct {
@@ -38,43 +46,63 @@ func (todos *Todos) validateIndex(index int) error {
 
 func (todos *Todos) delete(index int) error {
 	tp := *todos
-
 	if err := tp.validateIndex(index); err != nil {
 		return err
 	}
 
 	*todos = append(tp[:index], tp[index+1:]...)
-
 	return nil
 }
 
 func (todos *Todos) toggle(index int) error {
-	tp := *todos
-
-	if err := tp.validateIndex(index); err != nil {
+	if err := (*todos).validateIndex(index); err != nil {
 		return err
 	}
 
-	isCompleted := tp[index].Completed
+	isCompleted := (*todos)[index].Completed
 
 	if !isCompleted {
 		completionTime := time.Now()
-		tp[index].CompletedAt = &completionTime
+		(*todos)[index].CompletedAt = &completionTime
 	}
 
-	tp[index].Completed = !isCompleted
-
+	(*todos)[index].Completed = !isCompleted
 	return nil
 }
 
 func (todos *Todos) edit(index int, title string) error {
-	tp := *todos
-
-	if err := tp.validateIndex(index); err != nil {
+	if err := (*todos).validateIndex(index); err != nil {
 		return err
 	}
 
-	tp[index].Title = title
-
+	(*todos)[index].Title = title
 	return nil
+}
+
+// feat: print() for Todos to have a tabular view
+func (todos *Todos) print() {
+	tbl := table.New(os.Stdout)
+	tbl.SetRowLines(false)
+	tbl.SetHeaders("#", "Title", "Completed", "Created At", "Completed At")
+	for index, todo := range *todos {
+		completed := CompletedPending
+		completedAt := ""
+
+		if todo.Completed {
+			completed = CompletedSuccess
+			if todo.CompletedAt != nil {
+				completedAt = todo.CompletedAt.Format(time.DateTime)
+			}
+		}
+
+		tbl.AddRow(
+			strconv.Itoa(index),
+			todo.Title,
+			completed,
+			todo.CreatedAt.Format(time.DateTime),
+			completedAt,
+		)
+
+		tbl.Render()
+	}
 }
