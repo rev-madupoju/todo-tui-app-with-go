@@ -2,9 +2,7 @@ package main
 
 func main() {
 	todos := Todos{}
-	storage := NewStorage[Todos]("todos.json")
-	storage.Load(&todos)
-
+	
 	todos.add("Clean my desk")
 	todos.add("Write a blog")
 	todos.add("Read the Go docs")
@@ -17,6 +15,4 @@ func main() {
 	todos.edit(2, "Check out awesome-rust github projects ASAP")
 
 	todos.print()
-
-	storage.Save(todos)
 }
