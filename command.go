@@ -19,11 +19,11 @@ type CmdFlags struct {
 func NewCmdFlags() *CmdFlags {
 	cf := CmdFlags{}
 
-	flag.StringVar(&cf.CreateAndAddTodo, "ca", "", "Create a new todo specifying the title")
+	flag.StringVar(&cf.CreateAndAddTodo, "ca", "", "Create & add a new todo specifying the title")
 	flag.BoolVar(&cf.ReadTodos, "ls", false, "List/Read the todos collection")
 	flag.StringVar(&cf.UpdateTodoTitle, "ut", "", "Update the title of an existing todo by index <id:new_title>")
 	flag.IntVar(&cf.DeleteTodo, "rm", -1, "Delete an existing todo by index")
-	flag.IntVar(&cf.ToggleTodoAsCompleted, "tc", -1, "Toggle a todo as completed by index")
+	flag.IntVar(&cf.ToggleTodoAsCompleted, "tc", -1, "Toggle an existing todo as completed by index")
 
 	flag.Parse()
 
