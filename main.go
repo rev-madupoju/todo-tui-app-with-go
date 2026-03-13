@@ -7,6 +7,7 @@ func main() {
 	todos.add("Write a blog")
 	todos.add("Read the Go docs")
 	todos.add("Check out awesome-rust projs on gh")
+	todos.add("Go to gym at 5PM")
 
 	todos.toggle(0) // mark "Clean my desk as completed"
 
