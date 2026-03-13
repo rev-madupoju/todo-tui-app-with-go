@@ -24,7 +24,7 @@ func (s *Storage[T]) Save(data T) error {
 }
 
 func (s *Storage[T]) Load(data *T) error {
-	fileData, err := json.MarshalIndent(data, "", "    ")
+	fileData, err := os.ReadFile(s.FileName)
 
 	if err != nil {
 		return err

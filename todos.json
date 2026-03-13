@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "Title": "Complete todo-cli",
+        "Completed": true,
+        "CreatedAt": "2026-03-13T21:54:57.573448007+05:00",
+        "CompletedAt": "2026-03-13T23:50:12.372299212+05:00"
+    },
+    {
+        "Title": "push this to github",
+        "Completed": true,
+        "CreatedAt": "2026-03-13T23:51:15.899316574+05:00",
+        "CompletedAt": "2026-03-14T00:03:22.131936114+05:00"
+    }
+]
