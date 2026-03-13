@@ -26,7 +26,6 @@ func (todos *Todos) add(title string) {
 	*todos = append(*todos, newTodo)
 }
 
-// feat: validateIndex() helper func
 func (todos *Todos) validateIndex(index int) error {
 	if index < 0 || index >= len(*todos) {
 		err := errors.New("Invalid index")
@@ -37,7 +36,6 @@ func (todos *Todos) validateIndex(index int) error {
 	return nil
 }
 
-// feat: delete() method to remove a Todo from Todos collection
 func (todos *Todos) delete(index int) error {
 	tp := *todos
 
@@ -46,6 +44,37 @@ func (todos *Todos) delete(index int) error {
 	}
 
 	*todos = append(tp[:index], tp[index+1:]...)
+
+	return nil
+}
+
+func (todos *Todos) toggle(index int) error {
+	tp := *todos
+
+	if err := tp.validateIndex(index); err != nil {
+		return err
+	}
+
+	isCompleted := tp[index].Completed
+
+	if !isCompleted {
+		completionTime := time.Now()
+		tp[index].CompletedAt = &completionTime
+	}
+
+	tp[index].Completed = !isCompleted
+
+	return nil
+}
+
+func (todos *Todos) edit(index int, title string) error {
+	tp := *todos
+
+	if err := tp.validateIndex(index); err != nil {
+		return err
+	}
+
+	tp[index].Title = title
 
 	return nil
 }
