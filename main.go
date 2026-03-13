@@ -18,6 +18,7 @@ func main() {
 	}
 
 	todos.add("Write a blog")
+	todos.delete(0)
 
 	fmt.Printf("%+v\n\n", todos)
 }
